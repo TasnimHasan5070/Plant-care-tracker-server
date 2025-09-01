@@ -43,6 +43,23 @@ async function run() {
       const result=await plantcollection.findOne(selectedid)
       res.send(result)
     })
+
+    app.patch('/update/:id',async(req,res)=>{
+      const id=req.params.id
+      const filter={_id:new ObjectId(id)}
+      const updatedoc={
+        $set:req.body
+      }
+      const result=await plantcollection.updateOne(filter,updatedoc)
+      res.send(result)
+    })
+
+    app.delete('/plants/:id',async(req,res)=>{
+      const id=req.params.id
+      const selectedid={_id:new ObjectId(id)}
+      const result=await plantcollection.deleteOne(selectedid);
+      res.send(result);
+    })
   } finally {
     // Ensures that the client will close when you finish/error
    // await client.close();
